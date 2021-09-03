@@ -18,10 +18,19 @@ export class DogItemComponent implements OnInit {
   constructor(private dogService: DogDataService, private userServive: UserServiceService) { }
 
   ngOnInit(): void {
+    this.userServive.getActiveUser().subscribe(data => {
+      console.log(data);
+
+    })
   }
 
+
+
   favourite(){
-    this.user = this.userServive.getActiveUser();
+    this.userServive.getActiveUser().subscribe((data) => {
+      this.user = data
+    });
+
     if(this.user.favourites.length > 0){
       for(const i of this.user.favourites){
         if(i.id === this.dog.id){
@@ -37,7 +46,7 @@ export class DogItemComponent implements OnInit {
   }
 
   like(){
-    this.user = this.userServive.getActiveUser();
+    this.userServive.getActiveUser().subscribe(data => this.user = data);
     if(this.user.like.length > 0){
       for(const i of this.user.like){
         if(i.id === this.dog.id){

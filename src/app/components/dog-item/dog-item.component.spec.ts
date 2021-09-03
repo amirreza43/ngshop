@@ -12,6 +12,7 @@ describe('DogItemComponent', () => {
     favourites: [],
     like: [dog]
     }
+
   beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
       declarations: [ DogItemComponent ]

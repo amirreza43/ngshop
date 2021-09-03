@@ -6,6 +6,22 @@ import { UserServiceService } from './user-service.service';
 describe('UserServiceService', () => {
   let service: UserServiceService;
   let user: User;
+  let users: User[];
+  let usersTest: User[]= [{
+    name: 'Amir',
+    favourites: [],
+    like: []
+    },
+    {
+    name: 'Kargen',
+    favourites: [],
+    like: []
+    },
+    {
+    name: 'Kay',
+    favourites: [],
+    like: []
+    }]
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(UserServiceService);
@@ -16,7 +32,7 @@ describe('UserServiceService', () => {
   });
 
   it('getActiveUser correctly gets the current user', () => {
-    user = service.getActiveUser()
+    service.getActiveUser().subscribe(data => user = data)
     expect(user).toEqual({
       name: 'Amir',
       favourites: [],
@@ -25,13 +41,9 @@ describe('UserServiceService', () => {
   });
 
   it('setActiveUser correctly sets the user who was passed', () => {
-    service.setActiveUser({
-      name: 'Kargen',
-      favourites: [],
-      like: []
-      });
+    service.setActiveUser('Kargen');
 
-    user = service.getActiveUser()
+    service.getActiveUser().subscribe(data => user = data)
     expect(user).toEqual({
       name: 'Kargen',
       favourites: [],
@@ -48,9 +60,9 @@ describe('UserServiceService', () => {
 
     service.createUser(user)
 
-    service.setActiveUser(user);
+    service.setActiveUser(user.name);
 
-    user = service.getActiveUser()
+    service.getActiveUser().subscribe(data => user = data)
     expect(user).toEqual({
       name: 'Chyld',
       favourites: [],
@@ -60,12 +72,17 @@ describe('UserServiceService', () => {
 
   it('login correctly logs in the user and sets them as active', () => {
     service.login('Kargen')
-    user = service.getActiveUser()
+    service.getActiveUser().subscribe(data => user = data)
     expect(user).toEqual({
       name: 'Kargen',
       favourites: [],
       like: []
       })
+  });
+
+  it('getAllUsers should return all current users', () => {
+    service.getAllUsers().subscribe(data => users = data)
+    expect(users).toEqual(usersTest)
   });
 
 });

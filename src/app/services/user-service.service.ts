@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import User from '../models/User'
 
 @Injectable({
@@ -27,12 +28,16 @@ export class UserServiceService {
 
   constructor() { }
 
-  getActiveUser(): User{
-    return this.activeUser;
+  getActiveUser(): Observable<User>{
+    return of(this.activeUser);
   }
 
-  setActiveUser(user: User): void{
-    this.activeUser = user
+  setActiveUser(name: string): void{
+    this.users.map((user)=>{
+      if(user.name === name){
+        this.activeUser = user
+      }
+    })
   }
 
   createUser(user: User){
@@ -42,10 +47,14 @@ export class UserServiceService {
   login(name: string){
     for(const i of this.users){
       if(i.name === name){
-        this.setActiveUser(i)
+        this.setActiveUser(name)
       }
     }
     return 'User not found!'
+  }
+
+  getAllUsers(): Observable<User[]>{
+    return of(this.users)
   }
 
 }
