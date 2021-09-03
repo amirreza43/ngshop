@@ -1,0 +1,11 @@
+
+<div class="card w-25 text-dark text-center bg-light mb-3">
+  <img [src]="dog.image" style="height: 30vh;" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">{{dog.name}}</p>
+  </div>
+  <button class="btn btn-primary m-5 mb-1 mt-2" (click)='favourite()'><i [ngClass]="isFav? 'fas fa-heart': 'far fa-heart'"></i></button>
+  {{dog.like? dog.like : 0}}
+  <button class="btn btn-primary m-5 mb-1 mt-2" (click)='like()'><i [ngClass]="isLiked? 'fas fa-thumbs-up': 'far fa-thumbs-up'" class="far fa-thumbs-up"></i></button>
+</div>
+
